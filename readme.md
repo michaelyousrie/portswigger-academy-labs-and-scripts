@@ -1,6 +1,11 @@
+# WARNING
+
+This repo contains *SPOILERS* for Port Swigger web security academy and solutions to the labs there. Be warned before reading any further.
+
 ## This repo is all about my journey through Port Swigger's Academy
 
 I'm learning Web Security through [Port Swigger's Academy](https://portswigger.net/web-security/) and I deemed it cool that I add all the helper scripts that I generate along the way, as well as some write ups about each lab as I go through it.
+
 
 ## Why?
 
