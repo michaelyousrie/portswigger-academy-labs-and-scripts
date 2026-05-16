@@ -33,6 +33,34 @@ Content-Length: 0
 
 - So, the final string is basically in this format: `{BASE64_ENCODE({USERNAME}:{MD5(PASSWORD)})}`. With this knowledge, we can super simply create a PHP function that would iterate over the dictionary of passwords we have for this lab to generate potential strings that would act as the `stay-logged-in` cookie for the victim; `carlos`.
 
+---
+
+- Now since we have a bunch of cookie values we can use to brute force, let's do some brute forcing! Setup the request to `/my-account?id=carlos` and notice that our cookie is there; `stay-logged-in`. Let's move this request to Burp Suite's intruder and make sure to add a payload position on the cookie's value and then paste in our list of cookie values and get that attack started!
+
+- Request should be something like:
+```
+GET /my-account?id=carlos HTTP/2
+Host: 0abf00860318841683cfc48800140071.web-security-academy.net
+Cookie: stay-logged-in=cookie
+Sec-Ch-Ua: "Chromium";v="148", "Google Chrome";v="148", "Not/A)Brand";v="99"
+Sec-Ch-Ua-Mobile: ?0
+Sec-Ch-Ua-Platform: "Windows"
+Dnt: 1
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: navigate
+Sec-Fetch-User: ?1
+Sec-Fetch-Dest: document
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.9,ar;q=0.8
+Priority: u=0, i
+
+```
+
+---
+
 - I did all of this and something extremely weird happened. None of the values generated in the file actually worked.
 
 - I ended up just doing the EXACT SAME logic but using Burp Suite's payload processing and sending the exact same request and it actually worked. I have 0 idea why this might be the case.
@@ -41,7 +69,38 @@ Content-Length: 0
 
 - Python worked. For some reason, the same code is not producing the same results in PHP and Python! The output values of the SAME logic on the SAME value is different in both PHP and Python!! This is worthy of an investigation. This is where AI could greatly help! Let's ask Claude about the reason.
 
+- Oh boy you wouldn't believe who the culprit is actually is .... WINDOWS CRLF! Here's the full Claude response
 
+```
+[Me]:
+I want you to examine this folder portswigger-lab-brute-forcing-a-stay-logged-in-cookie with all the files in it. I want you to explain to me why the output values stored in the python txt file is different (and actually correct) compared to the results coming from the php script in the PHP txt file.
+---
+
+[Claude (after thinking for about 3 minutes)]:
+The Root Cause: Windows CRLF Line Endings
+The PHP file was saved with Windows CRLF (\r\n) line endings. This is the single cause of every difference you see.
+
+What happens step by step
+In PHP, the multiline password string stored in $passwords contains literal \r\n between each line (because the .php file itself was saved with CRLF). When you then do:
+
+
+explode("\n", $passwords)
+It splits only on \n — leaving the \r attached to the end of each password except the last one. So instead of hashing "123456", PHP is hashing "123456\r".
+
+As you can see from the test:
+
+md5("123456") = e10adc3949ba59abbe56e057f20f883e ← Python (correct)
+md5("123456\r") = 1e878afe9e91b6531feeaf31882d845a ← PHP (wrong)
+In Python, str.splitlines() is CRLF-aware — it correctly treats \r\n as a single line separator and strips both characters, giving you clean passwords.
+
+Why the last line (moscow) matches in both files
+The PHP string ends with moscow" — no trailing newline before the closing quote. So moscow has no \r attached to it, meaning md5("moscow") is identical in both scripts. Both output files' line 100 is the exact same value — confirmed above.
+
+The fix for PHP
+Add a trim() call to strip \r (and any surrounding whitespace) from each password
+```
+
+- What a crazy ride. we even learnt something new today; other than hacking poor carlos...again.
 ---
 <details>
   <summary>Spoiler alert. The correct cookie value for me was:</summary>
