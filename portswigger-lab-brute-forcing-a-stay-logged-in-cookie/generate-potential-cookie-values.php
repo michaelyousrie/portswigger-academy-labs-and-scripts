@@ -109,6 +109,6 @@ moscow";
 
 $username = 'carlos';
 foreach(explode("\n", $passwords) as $password) {
-    $potentialCookieValue = base64_encode($username . ':' . md5($password));
+    $potentialCookieValue = base64_encode($username . ':' . md5(trim($password))); // this trim() has a story. Read the readme.md file in this folder to learn about it.
     file_put_contents('potential_cookie_values_php.txt', $potentialCookieValue ."\n", FILE_APPEND);
 }
