@@ -18,3 +18,15 @@ I've added [foxy-proxy](https://chromewebstore.google.com/detail/foxyproxy/gcknh
 The trick here is to export the burp certificate and add this to your browser so browsers don't freak out about https traffic going through burp suite. [This guide shows you how to do that](https://portswigger.net/burp/documentation/desktop/external-browser-config/certificate/ca-cert-chrome-windows)
 
 With this done, I can easily move all of my chrome traffic through my burp suite which allows me to log, inspect, dissect, analyze and manipulate HTTP traffic super easily. Super useful for doing these labs.
+
+### Common tools
+
+I use a couple of online tools across this entire series. So here are the links for each tool here in case I forget to link to the tool during my writeup (I actually write these READMEs as I'm actively solving the lab so I might forget).
+
+- [CrackStation](https://crackstation.net) is used to check hashes and try to crack them using a precomputed hash list.
+
+- [CyberChef](https://gchq.github.io/CyberChef) is kinda a do-it-all string manipulation tool where you can cook up a few string manipulation, including hasing and encrypting, recipes and then it'll show you the results. Pretty useful.
+
+- [MD5 Center](https://md5.gromweb.com/) is an MD5 decryptor that tries to decrypt and MD5 hash back to its original form.
+
+- [Yoink!](https://yoink.michaelyousrie.com) is a shameless plug of my own *TOTALLY FREE BTW* HTTP logger tool. That's all it does really, just logs a lot of useful information about an HTTP request that is sent its way.
