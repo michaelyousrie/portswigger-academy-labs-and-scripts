@@ -1,6 +1,8 @@
 # [Password brute-force via password change](https://portswigger.net/web-security/learning-paths/authentication-vulnerabilities/vulnerabilities-in-other-authentication-mechanisms/authentication/other-mechanisms/lab-password-brute-force-via-password-change)
 
-My first lab while recording a YouTube video. Awesome!
+My first lab while recording a [YouTube video](https://youtu.be/VtFQBJqdTR4). Awesome!
+
+Youtube video link: https://youtu.be/VtFQBJqdTR4
 
 # Thought Process
 
