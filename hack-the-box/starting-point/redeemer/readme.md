@@ -2,6 +2,8 @@
 
 [Redeemer Redis Machine](https://app.hackthebox.com/machines/Redeemer)
 
+[YouTube Video](https://youtu.be/Cw8c9-4-PCs)
+
 This machine is about connecting to a redis database and fetching the flag value from it. It's basically about using a few basic Redis commands;
 
 - `keys *` which lists all the keys in a given database
