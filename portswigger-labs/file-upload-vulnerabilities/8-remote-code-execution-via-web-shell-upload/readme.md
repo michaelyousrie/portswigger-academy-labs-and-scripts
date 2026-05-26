@@ -66,7 +66,3 @@ Copy the secret value from the response and submit it in the lab banner.
 - **Use allowlists, not blocklists.** Only permit specific known-safe file extensions like `.jpg`, `.png`, `.gif` rather than trying to block dangerous ones.
 
 - **Consider renaming uploaded files.** Stripping the original filename and extension prevents attackers from controlling how the server interprets the file.
-
-## Tools Used
-
-- Burp Suite Community Edition
